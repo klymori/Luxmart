@@ -6,7 +6,7 @@ import { loginSuccess } from '../features/auth/authSlice'
 import Button from '../components/ui/Button'
 import Input from '../components/ui/Input'
 import { toast } from 'react-hot-toast'
-import { Mail, Lock, Eye, EyeOff } from 'lucide-react'
+import { Eye, EyeOff } from 'lucide-react'
 
 const LoginPage: React.FC = () => {
   const navigate = useNavigate()

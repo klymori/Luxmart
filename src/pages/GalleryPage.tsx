@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import { Swiper, SwiperSlide } from 'swiper/react'
-import { Navigation, Pagination, Thumbs } from 'swiper/modules'
-import { X, ChevronLeft, ChevronRight } from 'lucide-react'
+// import { Swiper, SwiperSlide } from 'swiper/react'
+// import { Navigation, Pagination, Thumbs } from 'swiper/modules'
+import { X, ChevronRight } from 'lucide-react'
 
 const GalleryPage: React.FC = () => {
   const [selectedImage, setSelectedImage] = useState<string | null>(null)

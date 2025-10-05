@@ -4,7 +4,7 @@ import { useAppSelector, useAppDispatch } from '../hooks/redux'
 import { removeFromWishlist, clearWishlist } from '../features/wishlist/wishlistSlice'
 import ProductCard from '../components/products/ProductCard'
 import Button from '../components/ui/Button'
-import { Heart, ShoppingBag, Trash2 } from 'lucide-react'
+import { Heart, Trash2 } from 'lucide-react'
 import { toast } from 'react-hot-toast'
 
 const WishlistPage: React.FC = () => {

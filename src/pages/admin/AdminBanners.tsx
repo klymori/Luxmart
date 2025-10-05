@@ -3,7 +3,7 @@ import { useAppSelector } from '../../hooks/redux'
 import { useGetBannersQuery, useDeleteBannerMutation } from '../../api/bannersApi'
 import Button from '../../components/ui/Button'
 import LoadingSpinner from '../../components/ui/LoadingSpinner'
-import { Plus, Edit, Trash2, Eye, EyeOff, ArrowUp, ArrowDown } from 'lucide-react'
+import { Plus, Edit, Trash2 } from 'lucide-react'
 
 const AdminBanners: React.FC = () => {
   const { user } = useAppSelector((state) => state.auth)

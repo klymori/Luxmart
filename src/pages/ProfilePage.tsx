@@ -4,7 +4,7 @@ import { useUpdateProfileMutation } from '../api/authApi'
 import { updateUser } from '../features/auth/authSlice'
 import Button from '../components/ui/Button'
 import Input from '../components/ui/Input'
-import { User, Mail, Phone, MapPin, Save } from 'lucide-react'
+import { User, Save } from 'lucide-react'
 import { toast } from 'react-hot-toast'
 
 const ProfilePage: React.FC = () => {

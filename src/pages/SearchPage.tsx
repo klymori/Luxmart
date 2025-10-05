@@ -3,7 +3,7 @@ import { useSearchParams } from 'react-router-dom'
 import { useGetProductsQuery } from '../api/productsApi'
 import ProductCard from '../components/products/ProductCard'
 import LoadingSpinner from '../components/ui/LoadingSpinner'
-import { Search, Filter } from 'lucide-react'
+import { Search } from 'lucide-react'
 
 const SearchPage: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams()

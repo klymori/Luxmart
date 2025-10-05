@@ -1,6 +1,6 @@
 import React from 'react'
 import { useAppSelector } from '../../hooks/redux'
-import { BarChart3, Package, ShoppingCart, Users, TrendingUp, DollarSign } from 'lucide-react'
+import { BarChart3, Package, ShoppingCart, Users, DollarSign } from 'lucide-react'
 
 const AdminDashboard: React.FC = () => {
   const { user } = useAppSelector((state) => state.auth)
