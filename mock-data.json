@@ -1,0 +1,280 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "name": "Айбек Токтогулов",
+      "email": "aibek@example.com",
+      "role": "admin",
+      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=aibek",
+      "phone": "+996 555 123 456",
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "2",
+      "name": "Айнура Асанова",
+      "email": "ainura@example.com",
+      "role": "user",
+      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=ainura",
+      "phone": "+996 555 234 567",
+      "createdAt": "2024-01-02T00:00:00Z"
+    }
+  ],
+  "products": [
+    {
+      "id": "1",
+      "title": {
+        "ru": "iPhone 15 Pro",
+        "en": "iPhone 15 Pro",
+        "kg": "iPhone 15 Pro"
+      },
+      "description": {
+        "ru": "Новейший iPhone с титановым корпусом и чипом A17 Pro",
+        "en": "Latest iPhone with titanium body and A17 Pro chip",
+        "kg": "Эң акыркы iPhone титан корпус жана A17 Pro чип менен"
+      },
+      "price": 89990,
+      "oldPrice": 99990,
+      "stock": 15,
+      "images": [
+        "https://images.unsplash.com/photo-1592750475338-74b7b21085ab?w=500",
+        "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=500"
+      ],
+      "categories": ["phones"],
+      "attributes": {
+        "color": ["Natural Titanium", "Blue Titanium", "White Titanium", "Black Titanium"],
+        "storage": ["128GB", "256GB", "512GB", "1TB"],
+        "brand": "Apple"
+      },
+      "rating": 4.8,
+      "reviewsCount": 124,
+      "isFeatured": true,
+      "isNew": true,
+      "isOnSale": true,
+      "createdAt": "2024-01-15T00:00:00Z",
+      "updatedAt": "2024-01-15T00:00:00Z"
+    },
+    {
+      "id": "2",
+      "title": {
+        "ru": "MacBook Air M2",
+        "en": "MacBook Air M2",
+        "kg": "MacBook Air M2"
+      },
+      "description": {
+        "ru": "Ультратонкий ноутбук с чипом M2 и 13-дюймовым дисплеем Liquid Retina",
+        "en": "Ultra-thin laptop with M2 chip and 13-inch Liquid Retina display",
+        "kg": "Ультра ичке ноутбук M2 чип жана 13 дюйм Liquid Retina дисплей менен"
+      },
+      "price": 79990,
+      "oldPrice": null,
+      "stock": 8,
+      "images": [
+        "https://images.unsplash.com/photo-1541807084-5c52b6b3adef?w=500",
+        "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=500"
+      ],
+      "categories": ["laptops"],
+      "attributes": {
+        "color": ["Space Gray", "Silver", "Starlight", "Midnight"],
+        "storage": ["256GB", "512GB", "1TB", "2TB"],
+        "ram": ["8GB", "16GB", "24GB"],
+        "brand": "Apple"
+      },
+      "rating": 4.7,
+      "reviewsCount": 89,
+      "isFeatured": true,
+      "isNew": false,
+      "isOnSale": false,
+      "createdAt": "2024-01-10T00:00:00Z",
+      "updatedAt": "2024-01-10T00:00:00Z"
+    },
+    {
+      "id": "3",
+      "title": {
+        "ru": "Samsung Galaxy S24 Ultra",
+        "en": "Samsung Galaxy S24 Ultra",
+        "kg": "Samsung Galaxy S24 Ultra"
+      },
+      "description": {
+        "ru": "Флагманский смартфон Samsung с S Pen и камерой 200MP",
+        "en": "Samsung flagship smartphone with S Pen and 200MP camera",
+        "kg": "Samsung флагман смартфон S Pen жана 200MP камера менен"
+      },
+      "price": 69990,
+      "oldPrice": 79990,
+      "stock": 12,
+      "images": [
+        "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=500",
+        "https://images.unsplash.com/photo-1592750475338-74b7b21085ab?w=500"
+      ],
+      "categories": ["phones"],
+      "attributes": {
+        "color": ["Titanium Black", "Titanium Gray", "Titanium Violet", "Titanium Yellow"],
+        "storage": ["256GB", "512GB", "1TB"],
+        "brand": "Samsung"
+      },
+      "rating": 4.6,
+      "reviewsCount": 156,
+      "isFeatured": false,
+      "isNew": true,
+      "isOnSale": true,
+      "createdAt": "2024-01-20T00:00:00Z",
+      "updatedAt": "2024-01-20T00:00:00Z"
+    }
+  ],
+  "categories": [
+    {
+      "id": "1",
+      "name": {
+        "ru": "Смартфоны",
+        "en": "Smartphones",
+        "kg": "Смартфондар"
+      },
+      "parentId": null,
+      "image": "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=300",
+      "slug": "phones"
+    },
+    {
+      "id": "2",
+      "name": {
+        "ru": "Ноутбуки",
+        "en": "Laptops",
+        "kg": "Ноутбуктар"
+      },
+      "parentId": null,
+      "image": "https://images.unsplash.com/photo-1541807084-5c52b6b3adef?w=300",
+      "slug": "laptops"
+    },
+    {
+      "id": "3",
+      "name": {
+        "ru": "Аудио",
+        "en": "Audio",
+        "kg": "Аудио"
+      },
+      "parentId": null,
+      "image": "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=300",
+      "slug": "audio"
+    }
+  ],
+  "orders": [
+    {
+      "id": "ORD-001",
+      "userId": "2",
+      "items": [
+        {
+          "productId": "1",
+          "product": {
+            "id": "1",
+            "title": { "ru": "iPhone 15 Pro", "en": "iPhone 15 Pro", "kg": "iPhone 15 Pro" },
+            "price": 89990,
+            "images": ["https://images.unsplash.com/photo-1592750475338-74b7b21085ab?w=100"]
+          },
+          "quantity": 1,
+          "price": 89990,
+          "selectedAttributes": {
+            "color": "Natural Titanium",
+            "storage": "256GB"
+          }
+        }
+      ],
+      "total": 89990,
+      "status": "delivered",
+      "address": {
+        "street": "ул. Чуй, 123",
+        "city": "Бишкек",
+        "postalCode": "720000",
+        "country": "Кыргызстан",
+        "apartment": "45",
+        "floor": "5",
+        "entrance": "2"
+      },
+      "paymentInfo": {
+        "method": "card",
+        "installmentPlan": null
+      },
+      "pickupPointId": "1",
+      "trackingNumber": "TRK123456789",
+      "createdAt": "2024-01-15T10:30:00Z",
+      "updatedAt": "2024-01-16T14:20:00Z"
+    }
+  ],
+  "reviews": [
+    {
+      "id": "1",
+      "productId": "1",
+      "userId": "2",
+      "user": {
+        "id": "2",
+        "name": "Айнура Асанова",
+        "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=ainura"
+      },
+      "rating": 5,
+      "text": "Отличный телефон! Камера просто потрясающая, батарея держит весь день.",
+      "status": "approved",
+      "createdAt": "2024-01-20T15:30:00Z",
+      "updatedAt": "2024-01-20T15:30:00Z"
+    }
+  ],
+  "banners": [
+    {
+      "id": "1",
+      "imageUrl": "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800",
+      "link": "/catalog?category=phones",
+      "title": "Новые смартфоны",
+      "description": "Скидки до 30% на новинки",
+      "order": 1,
+      "active": true,
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "2",
+      "imageUrl": "https://images.unsplash.com/photo-1541807084-5c52b6b3adef?w=800",
+      "link": "/catalog?category=laptops",
+      "title": "Ноутбуки для работы",
+      "description": "Мощные ноутбуки для профессионалов",
+      "order": 2,
+      "active": true,
+      "createdAt": "2024-01-01T00:00:00Z"
+    }
+  ],
+  "pickup_points": [
+    {
+      "id": "1",
+      "title": "Пункт выдачи №1 - Центр",
+      "address": "ул. Чуй, 123, г. Бишкек",
+      "lat": 42.8746,
+      "lng": 74.5698,
+      "workingHours": {
+        "monday": "9:00 - 20:00",
+        "tuesday": "9:00 - 20:00",
+        "wednesday": "9:00 - 20:00",
+        "thursday": "9:00 - 20:00",
+        "friday": "9:00 - 20:00",
+        "saturday": "10:00 - 18:00",
+        "sunday": "10:00 - 16:00"
+      },
+      "phone": "+996 (XXX) XXX-XX-XX",
+      "email": "pickup1@luxmart.com",
+      "isActive": true
+    },
+    {
+      "id": "2",
+      "title": "Пункт выдачи №2 - Юг",
+      "address": "ул. Ленина, 45, г. Бишкек",
+      "lat": 42.8546,
+      "lng": 74.5898,
+      "workingHours": {
+        "monday": "9:00 - 20:00",
+        "tuesday": "9:00 - 20:00",
+        "wednesday": "9:00 - 20:00",
+        "thursday": "9:00 - 20:00",
+        "friday": "9:00 - 20:00",
+        "saturday": "10:00 - 18:00",
+        "sunday": "10:00 - 16:00"
+      },
+      "phone": "+996 (XXX) XXX-XX-XX",
+      "email": "pickup2@luxmart.com",
+      "isActive": true
+    }
+  ]
+}
