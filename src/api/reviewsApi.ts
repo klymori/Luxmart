@@ -20,7 +20,7 @@ export const reviewsApi = createApi({
         url: '',
         params: { productId, page, limit },
       }),
-      providesTags: (result, error, { productId }) => [{ type: 'Review', id: productId }],
+      providesTags: (_result, _error, { productId }) => [{ type: 'Review', id: productId }],
     }),
     createReview: builder.mutation<Review, { productId: string; rating: number; text: string }>({
       query: (reviewData) => ({
@@ -28,7 +28,7 @@ export const reviewsApi = createApi({
         method: 'POST',
         body: reviewData,
       }),
-      invalidatesTags: (result, error, { productId }) => [{ type: 'Review', id: productId }],
+      invalidatesTags: (_result, _error, { productId }) => [{ type: 'Review', id: productId }],
     }),
     updateReview: builder.mutation<Review, { id: string; rating: number; text: string }>({
       query: ({ id, ...reviewData }) => ({
@@ -36,14 +36,14 @@ export const reviewsApi = createApi({
         method: 'PUT',
         body: reviewData,
       }),
-      invalidatesTags: (result, error, { id }) => [{ type: 'Review', id }],
+      invalidatesTags: (_result, _error, { id }) => [{ type: 'Review', id }],
     }),
     deleteReview: builder.mutation<void, string>({
       query: (id) => ({
         url: `/${id}`,
         method: 'DELETE',
       }),
-      invalidatesTags: (result, error, id) => [{ type: 'Review', id }],
+      invalidatesTags: (_result, _error, id) => [{ type: 'Review', id }],
     }),
     moderateReview: builder.mutation<Review, { id: string; status: 'approved' | 'rejected' }>({
       query: ({ id, status }) => ({
@@ -51,7 +51,7 @@ export const reviewsApi = createApi({
         method: 'PUT',
         body: { status },
       }),
-      invalidatesTags: (result, error, { id }) => [{ type: 'Review', id }],
+      invalidatesTags: (_result, _error, { id }) => [{ type: 'Review', id }],
       // This should only be available for admin users
     }),
     getPendingReviews: builder.query<Review[], void>({

@@ -24,16 +24,16 @@ export const bannersApi = createApi({
       providesTags: ['Banner'],
     }),
     getBanner: builder.query<Banner, string>({
-      query: (id) => `/${id}`,
-      providesTags: (result, error, id) => [{ type: 'Banner', id }],
-    }),
+  query: (id) => `/${id}`,
+  providesTags: (_result, _error, id) => [{ type: 'Banner', id }],
+}),
     createBanner: builder.mutation<Banner, Partial<Banner>>({
       query: (banner) => ({
         url: '',
         method: 'POST',
         body: banner,
       }),
-      invalidatesTags: ['Banner'],
+      invalidatesTags: ['Banner'], // больше не используем result/error
     }),
     updateBanner: builder.mutation<Banner, { id: string; banner: Partial<Banner> }>({
       query: ({ id, banner }) => ({
@@ -41,14 +41,14 @@ export const bannersApi = createApi({
         method: 'PUT',
         body: banner,
       }),
-      invalidatesTags: (result, error, { id }) => [{ type: 'Banner', id }],
+      invalidatesTags: (_result, _error, { id }) => [{ type: 'Banner', id }], // TS6133 исправлено через _
     }),
     deleteBanner: builder.mutation<void, string>({
       query: (id) => ({
         url: `/${id}`,
         method: 'DELETE',
       }),
-      invalidatesTags: (result, error, id) => [{ type: 'Banner', id }],
+      invalidatesTags: (_result, _error, id) => [{ type: 'Banner', id }], // TS6133 исправлено через _
     }),
     updateBannerOrder: builder.mutation<Banner[], { banners: Array<{ id: string; order: number }> }>({
       query: ({ banners }) => ({
@@ -68,7 +68,7 @@ export const bannersApi = createApi({
           body: formData,
         }
       },
-      invalidatesTags: (result, error, { bannerId }) => [{ type: 'Banner', id: bannerId }],
+      invalidatesTags: (_result, _error, { bannerId }) => [{ type: 'Banner', id: bannerId }], // TS6133 исправлено через _
     }),
   }),
 })

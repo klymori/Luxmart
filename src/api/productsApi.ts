@@ -7,10 +7,8 @@ export const productsApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: '/api/products',
     prepareHeaders: (headers, { getState }) => {
-      const token = (getState() as any).auth.token
-      if (token) {
-        headers.set('authorization', `Bearer ${token}`)
-      }
+      const token = (getState() as { auth?: { token?: string } }).auth?.token
+      if (token) headers.set('authorization', `Bearer ${token}`)
       return headers
     },
   }),
@@ -18,152 +16,152 @@ export const productsApi = createApi({
   endpoints: (builder) => ({
     getProducts: builder.query<PaginatedResponse<Product>, SearchParams>({
       queryFn: async (params) => {
-        // Simulate API delay
-        await new Promise(resolve => setTimeout(resolve, 500))
-        
-        let filteredProducts = [...sampleProducts]
-        
-        // Apply search filter
-        if (params.query) {
-          const searchTerm = params.query.toLowerCase()
-          filteredProducts = filteredProducts.filter(product => 
-            product.title.ru.toLowerCase().includes(searchTerm) ||
-            product.description.ru.toLowerCase().includes(searchTerm) ||
-            product.brand.toLowerCase().includes(searchTerm)
-          )
-        }
-        
-        // Apply category filter
-        if (params.filters?.category) {
-          filteredProducts = filteredProducts.filter(product => 
-            product.category === params.filters.category
-          )
-        }
-        
-        // Apply price filter
-        if (params.filters?.minPrice) {
-          filteredProducts = filteredProducts.filter(product => 
-            product.price >= params.filters.minPrice!
-          )
-        }
-        if (params.filters?.maxPrice) {
-          filteredProducts = filteredProducts.filter(product => 
-            product.price <= params.filters.maxPrice!
-          )
-        }
-        
-        // Apply sorting
-        if (params.sortBy) {
-          filteredProducts.sort((a, b) => {
-            switch (params.sortBy) {
-              case 'price':
-                return params.sortOrder === 'asc' ? a.price - b.price : b.price - a.price
-              case 'rating':
-                return params.sortOrder === 'asc' ? a.rating - b.rating : b.rating - a.rating
-              case 'newest':
-                return params.sortOrder === 'asc' ? 1 : -1
-              default:
-                return 0
-            }
-          })
-        }
-        
-        // Pagination
-        const page = params.page || 1
-        const limit = params.limit || 12
-        const startIndex = (page - 1) * limit
-        const endIndex = startIndex + limit
-        const paginatedProducts = filteredProducts.slice(startIndex, endIndex)
-        
-        return {
-          data: {
-            data: paginatedProducts,
-            total: filteredProducts.length,
-            page,
-            limit,
-            totalPages: Math.ceil(filteredProducts.length / limit)
+        try {
+          const safeParams = params || {}
+          await new Promise((resolve) => setTimeout(resolve, 500))
+
+          let filteredProducts = [...sampleProducts]
+
+          // Поиск
+          if (safeParams.query) {
+            const term = safeParams.query.toLowerCase()
+            filteredProducts = filteredProducts.filter(
+              (p) =>
+                p.title.ru.toLowerCase().includes(term) ||
+                p.description.ru.toLowerCase().includes(term) ||
+                p.brand.toLowerCase().includes(term)
+            )
           }
+
+          // Фильтры
+          const filters = safeParams.filters || {}
+          if (filters.category) filteredProducts = filteredProducts.filter((p) => p.category === filters.category)
+          if (filters.minPrice != null) filteredProducts = filteredProducts.filter((p) => p.price >= filters.minPrice)
+          if (filters.maxPrice != null) filteredProducts = filteredProducts.filter((p) => p.price <= filters.maxPrice)
+
+          // Сортировка
+          const sortBy = safeParams.sortBy
+          const sortOrder = safeParams.sortOrder || 'asc'
+          if (sortBy) {
+            filteredProducts.sort((a, b) => {
+              switch (sortBy) {
+                case 'price':
+                  return sortOrder === 'asc' ? a.price - b.price : b.price - a.price
+                case 'rating':
+                  return sortOrder === 'asc' ? a.rating - b.rating : b.rating - a.rating
+                case 'newest':
+                  // Предполагается, что есть поле createdAt типа Date или string
+                  if (a.createdAt && b.createdAt) {
+                    return sortOrder === 'asc'
+                      ? new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+                      : new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+                  }
+                  return 0
+                default:
+                  return 0
+              }
+            })
+          }
+
+          // Пагинация
+          const page = safeParams.page || 1
+          const limit = safeParams.limit || 12
+          const startIndex = (page - 1) * limit
+          const endIndex = startIndex + limit
+          const paginatedProducts = filteredProducts.slice(startIndex, endIndex)
+
+          return {
+            data: {
+              data: paginatedProducts,
+              total: filteredProducts.length,
+              page,
+              limit,
+              totalPages: Math.ceil(filteredProducts.length / limit),
+            },
+          } as const
+        } catch (err) {
+          return { error: { status: 500, data: (err as Error).message } }
         }
       },
-      providesTags: ['Product'],
+      providesTags: (result) =>
+        result && result.length > 0
+          ? result.map((product) => ({ type: 'Product' as const, id: product.id }))
+          : [{ type: 'Product' }],
     }),
+
     getProduct: builder.query<Product, string>({
       queryFn: async (id) => {
-        await new Promise(resolve => setTimeout(resolve, 300))
-        const product = sampleProducts.find(p => p.id === id)
-        if (!product) {
-          return { error: { status: 404, data: 'Product not found' } }
+        try {
+          await new Promise((resolve) => setTimeout(resolve, 300))
+          const product = sampleProducts.find((p) => p.id === id)
+          if (!product) return { error: { status: 404, data: 'Product not found' } }
+          return { data: product } as const
+        } catch (err) {
+          return { error: { status: 500, data: (err as Error).message } }
         }
-        return { data: product }
       },
-      providesTags: (result, error, id) => [{ type: 'Product', id }],
+      providesTags: (_result, _error, id) => [{ type: 'Product', id }],
     }),
+
     getFeaturedProducts: builder.query<Product[], void>({
-      queryFn: async () => {
-        await new Promise(resolve => setTimeout(resolve, 300))
-        const featured = sampleProducts.filter(p => p.isFeatured)
-        return { data: featured }
-      },
-      providesTags: ['Product'],
+      queryFn: async () => ({ data: sampleProducts.filter((p) => p.isFeatured) } as const),
+      providesTags: (result) =>
+        result
+          ? result.map((product) => ({ type: 'Product' as const, id: product.id }))
+          : [{ type: 'Product' }],
     }),
+
     getNewProducts: builder.query<Product[], void>({
-      queryFn: async () => {
-        await new Promise(resolve => setTimeout(resolve, 300))
-        const newProducts = sampleProducts.filter(p => p.isNew)
-        return { data: newProducts }
-      },
-      providesTags: ['Product'],
+      queryFn: async () => ({ data: sampleProducts.filter((p) => p.isNew) } as const),
+      providesTags: (result) =>
+        result
+          ? result.map((product) => ({ type: 'Product' as const, id: product.id }))
+          : [{ type: 'Product' }],
     }),
+
     getSaleProducts: builder.query<Product[], void>({
-      queryFn: async () => {
-        await new Promise(resolve => setTimeout(resolve, 300))
-        const saleProducts = sampleProducts.filter(p => p.isOnSale)
-        return { data: saleProducts }
-      },
-      providesTags: ['Product'],
+      queryFn: async () => ({ data: sampleProducts.filter((p) => p.isOnSale) } as const),
+      providesTags: (result) =>
+        result
+          ? result.map((product: { id: any }) => ({ type: 'Product' as const, id: product.id }))
+          : [{ type: 'Product' }],
     }),
+
     getCategories: builder.query<Category[], void>({
       query: () => '/categories',
-      providesTags: ['Category'],
+      providesTags: (result) =>
+        result
+          ? result.map((category) => ({ type: 'Category' as const, id: category.id }))
+          : [{ type: 'Category' }],
     }),
+
     getCategory: builder.query<Category, string>({
       query: (id) => `/categories/${id}`,
-      providesTags: (result, error, id) => [{ type: 'Category', id }],
+      providesTags: (_result, _error, id) => [{ type: 'Category', id }],
     }),
+
     createProduct: builder.mutation<Product, Partial<Product>>({
-      query: (product) => ({
-        url: '',
-        method: 'POST',
-        body: product,
-      }),
-      invalidatesTags: ['Product'],
+      query: (product) => ({ url: '', method: 'POST', body: product }),
+      invalidatesTags: [{ type: 'Product' }],
     }),
+
     updateProduct: builder.mutation<Product, { id: string; product: Partial<Product> }>({
-      query: ({ id, product }) => ({
-        url: `/${id}`,
-        method: 'PUT',
-        body: product,
-      }),
-      invalidatesTags: (result, error, { id }) => [{ type: 'Product', id }],
+      query: ({ id, product }) => ({ url: `/${id}`, method: 'PUT', body: product }),
+      invalidatesTags: (_result, _error, { id }) => [{ type: 'Product', id }],
     }),
+
     deleteProduct: builder.mutation<void, string>({
-      query: (id) => ({
-        url: `/${id}`,
-        method: 'DELETE',
-      }),
-      invalidatesTags: (result, error, id) => [{ type: 'Product', id }],
+      query: (id) => ({ url: `/${id}`, method: 'DELETE' }),
+      invalidatesTags: (_result, _error, id) => [{ type: 'Product', id }],
     }),
+
     uploadProductImages: builder.mutation<{ urls: string[] }, { productId: string; files: File[] }>({
       query: ({ productId, files }) => {
         const formData = new FormData()
-        files.forEach(file => formData.append('images', file))
-        return {
-          url: `/${productId}/images`,
-          method: 'POST',
-          body: formData,
-        }
+        files.forEach((f) => formData.append('images', f))
+        return { url: `/${productId}/images`, method: 'POST', body: formData }
       },
-      invalidatesTags: (result, error, { productId }) => [{ type: 'Product', id: productId }],
+      invalidatesTags: (_result, _error, { productId }) => [{ type: 'Product', id: productId }],
     }),
   }),
 })

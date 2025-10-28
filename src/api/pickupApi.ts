@@ -25,7 +25,7 @@ export const pickupApi = createApi({
     }),
     getPickupPoint: builder.query<PickupPoint, string>({
       query: (id) => `/${id}`,
-      providesTags: (result, error, id) => [{ type: 'PickupPoint', id }],
+      providesTags: (_result, _error, id) => [{ type: 'PickupPoint', id }], // исправлено TS6133
     }),
     createPickupPoint: builder.mutation<PickupPoint, Partial<PickupPoint>>({
       query: (pickupPoint) => ({
@@ -41,14 +41,14 @@ export const pickupApi = createApi({
         method: 'PUT',
         body: pickupPoint,
       }),
-      invalidatesTags: (result, error, { id }) => [{ type: 'PickupPoint', id }],
+      invalidatesTags: (_result, _error, { id }) => [{ type: 'PickupPoint', id }], // исправлено TS6133
     }),
     deletePickupPoint: builder.mutation<void, string>({
       query: (id) => ({
         url: `/${id}`,
         method: 'DELETE',
       }),
-      invalidatesTags: (result, error, id) => [{ type: 'PickupPoint', id }],
+      invalidatesTags: (_result, _error, id) => [{ type: 'PickupPoint', id }], // исправлено TS6133
     }),
     getNearestPickupPoints: builder.query<PickupPoint[], { lat: number; lng: number; radius?: number }>({
       query: ({ lat, lng, radius = 10 }) => ({

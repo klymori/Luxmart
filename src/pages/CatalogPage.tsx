@@ -48,7 +48,9 @@ const CatalogPage: React.FC = () => {
     query: searchParams.get('q') || undefined,
     filters,
     page,
-    limit: 12
+    limit: 12,
+    sortBy: undefined,
+    sortOrder: ''
   }
 
   const { data, isLoading, error } = useGetProductsQuery(searchParams_obj)
@@ -59,7 +61,7 @@ const CatalogPage: React.FC = () => {
     
     // Update URL
     const newSearchParams = new URLSearchParams(searchParams)
-    Object.entries(newFilters).forEach(([key, value]) => {
+    Object.entries(newFilters ?? {}).forEach(([key, value]) => {
       if (value !== undefined && value !== null && value !== '') {
         newSearchParams.set(key, String(value))
       } else {

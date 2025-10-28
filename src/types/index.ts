@@ -18,6 +18,8 @@ export interface AuthState {
 
 // Product types
 export interface Product {
+  category: string | undefined
+  brand: any
   id: string
   title: {
     ru: string
@@ -214,6 +216,8 @@ export interface SearchFilters {
 }
 
 export interface SearchParams {
+  sortBy: any
+  sortOrder: string
   query?: string
   filters?: SearchFilters
   page?: number
@@ -228,6 +232,8 @@ export interface ApiResponse<T> {
 }
 
 export interface PaginatedResponse<T> {
+  length: number
+  map(arg0: (product: any) => { type: "Product"; id: any }): readonly (import("@reduxjs/toolkit/query").TagDescription<"Product" | "Category"> | null | undefined)[]
   data: T[]
   pagination: {
     page: number

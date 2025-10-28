@@ -15,16 +15,18 @@ export const ordersApi = createApi({
   }),
   tagTypes: ['Order'],
   endpoints: (builder) => ({
-    getOrders: builder.query<PaginatedResponse<Order>, { page?: number; limit?: number; status?: string }>({
-      query: (params) => ({
-        url: '',
-        params,
-      }),
-      providesTags: ['Order'],
-    }),
+    getOrders: builder.query<PaginatedResponse<Order>, { page?: number; limit?: number; status?: string }>(
+      {
+        query: (params) => ({
+          url: '',
+          params,
+        }),
+        providesTags: ['Order'],
+      }
+    ),
     getOrder: builder.query<Order, string>({
       query: (id) => `/${id}`,
-      providesTags: (result, error, id) => [{ type: 'Order', id }],
+      providesTags: (_result, _error, id) => [{ type: 'Order', id }], // исправлено TS6133
     }),
     createOrder: builder.mutation<Order, CheckoutForm>({
       query: (orderData) => ({
@@ -40,14 +42,14 @@ export const ordersApi = createApi({
         method: 'PUT',
         body: { status, trackingNumber },
       }),
-      invalidatesTags: (result, error, { id }) => [{ type: 'Order', id }],
+      invalidatesTags: (_result, _error, { id }) => [{ type: 'Order', id }], // исправлено TS6133
     }),
     cancelOrder: builder.mutation<Order, string>({
       query: (id) => ({
         url: `/${id}/cancel`,
         method: 'PUT',
       }),
-      invalidatesTags: (result, error, id) => [{ type: 'Order', id }],
+      invalidatesTags: (_result, _error, id) => [{ type: 'Order', id }], // исправлено TS6133
     }),
     getOrderHistory: builder.query<Order[], void>({
       query: () => '/history',
